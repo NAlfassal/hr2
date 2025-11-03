@@ -1,0 +1,117 @@
+<!doctype html> 
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>حصر الأنشطة المعرفية - الهيئة العامة للغذاء والدواء</title>
+
+    <!-- خطوط و Tailwind (اختياري) -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+
+    <!-- ملف التنسيقات -->
+    <link rel="stylesheet" href="static/styles.css" />
+
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="logo-section">
+        <img src="static/Logo.png">
+      </div>
+
+      <div class="header">
+        <h1 class="title">حصر الأنشطة المعرفية في الهيئة العامة للغذاء والدواء</h1>
+
+        <div class="description">
+          تسعى أكاديمية الغذاء والدواء إلى توفير البيئة الملائمة للتعلم والتطور، وتجويد عمليات نقل المعرفة بما يحقق مستهدفات الهيئة العامة للغذاء والدواء،
+        </div>
+ 
+        <div class="note-section">
+          <h3 class="note-title">يعبأ النموذج من قبل:</h3>
+          <ul class="note-list">
+            <li><strong>المدير التنفيذي:</strong> مسؤول عن إدخال الأنشطة المعرفية التي نفذت من قبله</li>
+            <li><strong>مدير الإدارة:</strong> مسؤول عن إدخال الأنشطة المعرفية التي نفذت من قبله</li>
+            <li><strong>رئيس القسم:</strong> إدخال الأنشطة المعرفية التي نفذت من قبل رئيس القسم وموظفيه</li>
+          </ul>
+
+          <div id="currentMonth" class="month-badge"></div>
+        </div>
+      </div>
+
+      <form id="knowledgeForm" method="POST" action="/form">
+        <!-- lv1 -->
+        <div class="form-group">
+          <label class="form-label">اسم القطاع<span class="required">*</span></label>
+          <select class="form-control" id="sector" name="sector" required>
+            <option value="">اختر القطاع</option>
+          </select>
+        </div>
+
+        <!-- lv2 -->
+        <div class="form-group">
+          <label class="form-label">الإدارة التنفيذية<span class="required">*</span></label>
+          <select class="form-control" id="department" name="department" required disabled>
+            <option value="">اختر الإدارة التنفيذية</option>
+          </select>
+        </div>
+
+        <!-- lv3 -->
+        <div class="form-group">
+          <label class="form-label">الإدارة<span class="required">*</span></label>
+          <!-- 🔥 تعديل: تمت إضافة name="division" -->
+          <select class="form-control" id="division" name="division" required disabled>
+            <option value="">اختر الإدارة</option>
+          </select>
+        </div>
+
+        <!-- lv4 -->
+        <div class="form-group">
+          <label class="form-label">القسم<span class="required">*</span></label>
+          <!-- 🔥 تعديل: تمت إضافة name="section" -->
+          <select class="form-control" id="section" name="section" required disabled>
+            <option value="">اختر القسم</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="activityQuestion" style="display: none;">
+          <label class="form-label">هل تم تنفيذ أنشطة معرفية من قبلكم خلال شهر الحصر الحالي؟ <span class="required">*</span></label>
+          <div style="display:flex; gap:20px; margin-top:10px;">
+            <label class="choice choice--yes">
+              <input type="radio" name="hasActivities" value="yes" />
+              <span>نعم</span>
+            </label>
+
+            <label class="choice choice--no">
+              <input type="radio" name="hasActivities" value="no" />
+              <span>لا يوجد</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="formFields" style="display: none;"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn" style="display: none;">إرسال</button>
+
+        <div id="noActivitiesMessage" class="no-activities">
+          <h3>شكراً لك على الإفادة</h3>
+          <p>تم تسجيل عدم وجود أنشطة معرفية خلال شهر الحصر الحالي. نتطلع لمشاركتكم في الأشهر القادمة.</p>
+        </div>
+      </form>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p class="loading-text">جاري الإرسال...</p>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        <h3 style="color:#2e7d32; margin-bottom:10px;">✅ تم إرسال البيانات بنجاح!</h3>
+        <p>شكراً لك على تقديم معلومات النشاط المعرفي.</p>
+      </div>
+    </div>
+
+    <!-- ملف الجافاسكربت -->
+    <script type="module" src="static/app.js"></script>
+
+  </body>
+</html>

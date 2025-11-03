@@ -1,0 +1,254 @@
+@view-transition { navigation: auto; }
+
+html { height: 100%; }
+
+body {
+  box-sizing: border-box;
+  font-family: 'Noto Sans Arabic', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e1f5fe 50%, #e8f5e8 100%);
+  min-height: 100%;
+  line-height: 1.6;
+}
+html, body {
+  font-family: "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+
+/* الحاوية الأساسية */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* رأس مع الشعار */
+.logo-section {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(45deg, #e3f2fd, #f1f8e9);
+  border-radius: 15px;
+  
+}
+
+img {
+border-radius: 15px;
+}
+
+.logo-note { color:#4caf50; font-weight:500; }
+
+/* عناوين ووصف */
+.header { text-align: center; margin-bottom: 40px; }
+
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  color: #2c5aa0;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 15px;
+  color: #4a6741;
+  line-height: 1.7;
+  background: rgba(232, 245, 232, 0.3);
+  padding: 18px;
+  border-radius: 12px;
+  border-right: 3px solid rgba(76, 175, 80, 0.5);
+  text-align: right;
+}
+
+/* ملاحظات */
+.note-section {
+  background: rgba(255, 243, 224, 0.4);
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border-right: 3px solid rgba(255, 152, 0, 0.6);
+  text-align: right;
+}
+
+.note-title {
+  color: #b8860b;
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.note-list { list-style: none; padding: 0; margin: 0; }
+
+.note-list li {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 11px 14px;
+  margin-bottom: 8px;
+  border-radius: 7px;
+  border-right: 2px solid rgba(255, 152, 0, 0.6);
+  color: #8b4513;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.note-list li strong { color: #a0522d; }
+
+/* شارة الشهر */
+.month-badge {
+  font-size: 14px;
+  color: #666;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+}
+
+/* عناصر النموذج */
+.form-group { margin-bottom: 25px; }
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  color: #2c5aa0;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Noto Sans Arabic', Arial, sans-serif;
+  transition: all 0.3s ease;
+  background: white;
+  box-sizing: border-box;
+}
+
+.form-control:hover { border-color: #2196f3; }
+
+.form-control:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+}
+
+textarea.form-control { min-height: 100px; resize: vertical; }
+
+/* زر الإرسال */
+.submit-btn {
+  background: linear-gradient(135deg, #4a90e2 0%, #5cb85c 50%, #4a90e2 100%);
+  color: white;
+  padding: 16px 35px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 25px;
+  font-family: 'Noto Sans Arabic', Arial, sans-serif;
+  box-shadow: 0 3px 10px rgba(74, 144, 226, 0.2);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+  background: linear-gradient(135deg, #357abd 0%, #4cae4c 50%, #357abd 100%);
+}
+
+.submit-btn:active { transform: translateY(-1px); }
+
+.required { color: #f44336; font-weight: bold; }
+
+/* رسائل */
+.success-message {
+  background: linear-gradient(45deg, #e8f5e8, #e3f2fd);
+  color: #2e7d32;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 600;
+  border: 2px solid #4caf50;
+  display: none;
+}
+
+/* التحميل */
+.loading { display: none; text-align: center; margin-top: 20px; }
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #4caf50;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin { 0% {transform: rotate(0);} 100% {transform: rotate(360deg);} }
+
+.loading-text { color:#4caf50; margin-top:15px; font-weight:500; }
+
+/* شبكة الحقول */
+.form-row { display: flex; gap: 20px; }
+.form-row .form-group { flex: 1; }
+
+@media (max-width: 768px) {
+  .container { margin: 10px; padding: 15px; }
+  .form-row { flex-direction: column; gap: 0; }
+  .title { font-size: 24px; }
+}
+
+/* أزرار نعم/لا */
+.choice {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.choice input { margin-left: 8px; transform: scale(1.2); }
+
+.choice--yes { background: rgba(76, 175, 80, 0.1); }
+.choice--yes span { color: #2e7d32; font-weight: 500; }
+
+.choice--no { background: rgba(255, 152, 0, 0.1); }
+.choice--no span { color: #e65100; font-weight: 500; }
+
+/* رسالة لا توجد أنشطة */
+.no-activities {
+  display: none;
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(45deg, #fff3e0, #f3e5f5);
+  border-radius: 15px;
+  margin-top: 20px;
+  border: 2px solid #ff9800;
+}
+.no-activities h3 { color: #e65100; margin-bottom: 15px; }
+.no-activities p  { color: #bf360c; font-size: 16px; line-height: 1.6; }
+
+/* رسالة الخطأ التي يضيفها الجافاسكربت */
+.error-message {
+  color: #f44336;
+  font-size: 13px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: rgba(244, 67, 54, 0.1);
+  border-radius: 5px;
+  border-right: 3px solid #f44336;
+}
