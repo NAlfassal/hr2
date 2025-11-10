@@ -7,8 +7,6 @@ import {
 
 let store;
 
-// 🔥 خطوة 1: تم نقل الدوال المساعدة إلى هنا (النطاق العام)
-// الآن أصبحت متاحة لجميع أجزاء الكود
 function resetSelect(sel, placeholder, disable = true) {
   sel.innerHTML = '';
   const opt = document.createElement('option');
@@ -33,7 +31,7 @@ function isNoItemList(items) {
   return items.length === 1 && items[0].name.trim() === 'لا يوجد';
 }
 
-// 🔥 خطوة 2: تعريف الدالة الرئيسية مرة واحدة فقط
+//  خطوة 2: تعريف الدالة الرئيسية مرة واحدة فقط
 async function initOrgLists() {
   const data = await fetch('./static/org.data.json').then(r => r.json());
   store = buildStoreFromJson(data);
@@ -53,7 +51,7 @@ async function initOrgLists() {
   resetSelect(sectionEl,    'اختر القسم');
 }
 
-// 🔥 خطوة 3: هذا الكود ينتظر تحميل الصفحة ثم يبدأ كل شيء
+//  خطوة 3: هذا الكود ينتظر تحميل الصفحة ثم يبدأ كل شيء
 document.addEventListener('DOMContentLoaded', () => {
   // ===== عناصر DOM =====
   const sectorEl = document.getElementById('sector');
@@ -149,15 +147,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.value === 'yes') {
         showFormFields();
         setDynamicFieldsRequired(true);
-        noActivitiesMessage.style.display = 'none';
+        //noActivitiesMessage.style.display = 'none';
         submitBtn.style.display = 'block';
       } else {
         setDynamicFieldsRequired(false);
         formFieldsEl.innerHTML = '';
         formFieldsEl.style.display = 'none';
-        noActivitiesMessage.style.display = 'block';
+        //noActivitiesMessage.style.display = 'block';
         submitBtn.style.display = 'block';
-        noActivitiesMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        //noActivitiesMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       document.querySelectorAll('input[name="hasActivities"]').forEach((r) => {
         r.parentElement.style.borderColor = 'transparent';
@@ -375,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.set('division', divisionText);
     const sectionText = sectionEl.options[sectionEl.selectedIndex].text;
     formData.set('section', sectionText);
-    
+
     if (document.getElementById('activityType')) {
         const activityTypeText = document.getElementById('activityType').options[document.getElementById('activityType').selectedIndex].text;
         formData.set('activityType', activityTypeText);
