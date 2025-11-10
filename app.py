@@ -3,12 +3,10 @@ from flask import Flask, render_template, request
 import pandas as pd
 import os
 from datetime import datetime
-import mimetypes # 🔥 إضافة جديدة: استيراد المكتبة
+import mimetypes 
 
-# 🔥 إضافة جديدة: هذا السطر يخبر بايثون بالنوع الصحيح لملفات .js
 mimetypes.add_type('application/javascript', '.js')
 
-# 🔥 هذا هو السطر الحاسم: يخبر فلاسك بمكان الملفات
 app = Flask(__name__, static_folder='static', template_folder='.')
 
 DATA_PATH = os.path.join("data", "responses.xlsx")
@@ -16,7 +14,6 @@ DATA_PATH = os.path.join("data", "responses.xlsx")
 @app.route("/form", methods=["GET", "POST"])
 def form():
     if request.method == "POST":
-        # (منطق حفظ البيانات يبقى كما هو)
         column_order = [
             "البريد الإلكتروني", "اسم القطاع", "الإدارة التنفيذية", "الإدارة", "القسم",
             "هل توجد أنشطة؟", "موضوع النشاط", "نوع النشاط", "هدف استراتيجي 1", 
@@ -63,10 +60,12 @@ def form():
             worksheet = writer.sheets['الردود']
             worksheet.right_to_left()
             writer.close() 
-            return "✅ تم استلام النموذج وحفظه بنجاح!"
+            #  رسالة النجاح الموحدة
+            return "تم استلام ردك بنجاح , شكرًا لك على الإفادة , نتطلع لمشاركتكم في الأشهر القادمة.", 200
         except Exception as e:
             print(f"Error writing to Excel: {e}")
-            return "❌ فشل في حفظ البيانات.", 500
+            #  رسالة الخطأ الموحدة
+            return " فشل في حفظ البيانات. يرجى مراجعة الدعم الفني.", 500
     
     return render_template("index.html")
 
