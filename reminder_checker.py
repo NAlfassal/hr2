@@ -1,34 +1,39 @@
-# -*- coding: utf-8 -*-
 import pandas as pd
 import sys
 import os
 import smtplib
+from datetime import date
 from email.mime.text import MIMEText
 from email.header import Header
 
 def check_and_remind(responses_path, master_list_excel_path, gmail_user, gmail_pass, form_url):
     try:
-        # 1. قراءة قائمة كل الموظفين من ملف الإكسل الرئيسي
+        #  تأكيد عدم الإرسال المكرر في نفس اليوم
+        LOCK_FILE = f"reminder_lock_{date.today()}.txt"
+        if os.path.exists(LOCK_FILE):
+            print("Reminder already sent today. Skipping duplicate.")
+            sys.exit(0)
+        with open(LOCK_FILE, "w") as f:
+            f.write("sent")
+
+        # 1. قراءة قائمة كل الموظفين
         if not os.path.exists(master_list_excel_path):
             print(f"Error: Master employee list not found at {master_list_excel_path}", file=sys.stderr)
             sys.exit(1)
-            
         master_df = pd.read_excel(master_list_excel_path)
-        # 🔥 تأكيد: السكريبت يتوقع عمود اسمه 'Email' في هذا الملف
         all_employees = set(master_df['Email'].dropna().unique())
         
-        # 2. قراءة قائمة من قاموا بالرد
+        # 2. قراءة الردود
         if not os.path.exists(responses_path):
             responded_employees = set()
         else:
             responses_df = pd.read_excel(responses_path)
-            # 🔥 تأكيد: السكريبت يتوقع عمود اسمه 'البريد الإلكتروني' في ملف الردود
             if 'البريد الإلكتروني' in responses_df.columns:
                 responded_employees = set(responses_df['البريد الإلكتروني'].dropna().unique())
             else:
                 responded_employees = set()
 
-        # 3. تحديد من لم يقم بالرد
+        # 3. من لم يرد
         non_responders = all_employees - responded_employees
 
         if not non_responders:
@@ -37,7 +42,7 @@ def check_and_remind(responses_path, master_list_excel_path, gmail_user, gmail_p
 
         print(f"Found {len(non_responders)} employees who have not responded. Sending reminders...")
 
-        # 4. إرسال إيميل تذكير (لا تغيير هنا)
+        # 4. إرسال التذكيرات
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(gmail_user, gmail_pass)
@@ -45,7 +50,7 @@ def check_and_remind(responses_path, master_list_excel_path, gmail_user, gmail_p
         for email in non_responders:
             subject = "تذكير: الرجاء تعبئة نموذج حصر الأنشطة المعرفية"
             body = f"""مرحبًا،
-            
+
 هذا تذكير لطيف بضرورة تعبئة نموذج حصر الأنشطة المعرفية. الموعد النهائي قريب.
 
 الرجاء استخدام الرابط التالي لتعبئة النموذج:
@@ -57,7 +62,7 @@ def check_and_remind(responses_path, master_list_excel_path, gmail_user, gmail_p
             msg['Subject'] = Header(subject, 'utf-8')
             msg['From'] = gmail_user
             msg['To'] = email
-            
+
             server.sendmail(gmail_user, email, msg.as_string())
             print(f"Reminder sent to: {email}")
 
